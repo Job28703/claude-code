@@ -1,72 +1,128 @@
-# Claude Code
+# Claude Code — Job28703's Plugin Fork
 
-![](https://img.shields.io/badge/Node.js-18%2B-brightgreen?style=flat-square) [![npm]](https://www.npmjs.com/package/@anthropic-ai/claude-code)
+> Fork of [anthropics/claude-code](https://github.com/anthropics/claude-code) · Personal plugin collection & workflow extensions
 
-[npm]: https://img.shields.io/npm/v/@anthropic-ai/claude-code.svg?style=flat-square
+[![Node.js 18+](https://img.shields.io/badge/Node.js-18%2B-brightgreen?style=flat-square)](https://nodejs.org) [![npm](https://img.shields.io/npm/v/@anthropic-ai/claude-code.svg?style=flat-square)](https://www.npmjs.com/package/@anthropic-ai/claude-code)
 
-Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and handling git workflows -- all through natural language commands. Use it in your terminal, IDE, or tag @claude on Github.
+Claude Code is Anthropic's agentic coding tool that lives in your terminal. This fork extends the official release with **13 custom plugins**, specialized slash commands, and DevContainer tooling.
 
-**Learn more in the [official documentation](https://code.claude.com/docs/en/overview)**.
+**Install the official CLI → [code.claude.com/docs/en/setup](https://code.claude.com/docs/en/setup)**
 
-<img src="./demo.gif" />
+---
 
-## Get started
-> [!NOTE]
-> Installation via npm is deprecated. Use one of the recommended methods below.
+## ✨ What's added in this fork
 
-For more installation options, uninstall steps, and troubleshooting, see the [setup documentation](https://code.claude.com/docs/en/setup).
+| Asset | Count | Location |
+|---|---|---|
+| Custom plugins | 13 | [`plugins/`](./plugins/) |
+| Custom slash commands | 3 | [`.claude/commands/`](./.claude/commands/) |
+| DevContainer script | 1 | [`scripts/`](./scripts/) |
+| GitHub automation scripts | 3 | [`scripts/`](./scripts/) |
+
+---
+
+## 🔌 Plugins
+
+See [`plugins/README.md`](./plugins/README.md) for full documentation on each plugin.
+
+| Plugin | Type | What it does |
+|---|---|---|
+| [**agent-sdk-dev**](./plugins/agent-sdk-dev/) | Command | Scaffolds new Claude Agent SDK apps (`/new-sdk-app`) |
+| [**claude-opus-4-5-migration**](./plugins/claude-opus-4-5-migration/) | Skill | Migrates code from Sonnet 4.x / Opus 4.1 to Opus 4.5 |
+| [**code-review**](./plugins/code-review/) | Command | Parallel PR review with 5 Sonnet sub-agents (`/code-review`) |
+| [**commit-commands**](./plugins/commit-commands/) | Command | Git workflow automation (`/commit`, `/commit-push-pr`, `/clean_gone`) |
+| [**explanatory-output-style**](./plugins/explanatory-output-style/) | Hook | SessionStart hook that injects educational coding context |
+| [**feature-dev**](./plugins/feature-dev/) | Command | 7-phase guided feature development (`/feature-dev`) |
+| [**frontend-design**](./plugins/frontend-design/) | Skill | Production-grade UI/UX design (auto-invoked) |
+| [**hookify**](./plugins/hookify/) | Command | Create & manage custom hooks (`/hookify`, `/hookify:list`) |
+| [**learning-output-style**](./plugins/learning-output-style/) | Hook | SessionStart hook that encourages meaningful contributions |
+| [**plugin-dev**](./plugins/plugin-dev/) | Command | Full plugin creation toolkit (`/plugin-dev:create-plugin`) |
+| [**pr-review-toolkit**](./plugins/pr-review-toolkit/) | Command | 6-agent PR review specialization (`/pr-review-toolkit:review-pr`) |
+| [**ralph-wiggum**](./plugins/ralph-wiggum/) | Command | Self-referential AI loops for iterative development (`/ralph-loop`) |
+| [**security-guidance**](./plugins/security-guidance/) | Hook | PreToolUse hook that monitors 9 common security patterns |
+
+### Installing a plugin
+
+```bash
+# Copy any plugin folder into your project
+cp -r plugins/code-review /path/to/your/project/.claude-plugin/
+```
+
+---
+
+## 📝 Custom Commands
+
+Located in [`.claude/commands/`](./.claude/commands/):
+
+| Command | Purpose |
+|---|---|
+| `/commit-push-pr` | Automates commit → push → PR creation |
+| `/dedupe` | Deduplication helper |
+| `/oncall-triage` | On-call issue triage workflow |
+
+---
+
+## 🐳 DevContainer Setup (Windows)
+
+[`scripts/run_devcontainer_claude_code.ps1`](./scripts/run_devcontainer_claude_code.ps1) automates DevContainer initialization with Docker or Podman on Windows.
+
+```powershell
+# Docker backend
+.\scripts\run_devcontainer_claude_code.ps1 -Backend docker
+
+# Podman backend
+.\scripts\run_devcontainer_claude_code.ps1 -Backend podman
+```
+
+---
+
+## 🔧 GitHub Automation Scripts
+
+Located in [`scripts/`](./scripts/):
+
+| Script | Purpose |
+|---|---|
+| `auto-close-duplicates.ts` | Bun script that auto-closes duplicate GitHub issues |
+| `backfill-duplicate-comments.ts` | Backfills duplicate detection comments on existing issues |
+| `comment-on-duplicates.sh` | Shell script for commenting on duplicate issues |
+
+---
+
+## Getting Started (Official Claude Code)
 
 1. Install Claude Code:
 
-    **MacOS/Linux (Recommended):**
-    ```bash
-    curl -fsSL https://claude.ai/install.sh | bash
-    ```
+   **macOS / Linux (Recommended):**
+   ```bash
+   curl -fsSL https://claude.ai/install.sh | bash
+   ```
 
-    **Homebrew (MacOS/Linux):**
-    ```bash
-    brew install --cask claude-code
-    ```
+   **Homebrew:**
+   ```bash
+   brew install --cask claude-code
+   ```
 
-    **Windows (Recommended):**
-    ```powershell
-    irm https://claude.ai/install.ps1 | iex
-    ```
+   **Windows (Recommended):**
+   ```powershell
+   irm https://claude.ai/install.ps1 | iex
+   ```
 
-    **WinGet (Windows):**
-    ```powershell
-    winget install Anthropic.ClaudeCode
-    ```
-
-    **NPM (Deprecated):**
-    ```bash
-    npm install -g @anthropic-ai/claude-code
-    ```
+   **WinGet:**
+   ```powershell
+   winget install Anthropic.ClaudeCode
+   ```
 
 2. Navigate to your project directory and run `claude`.
 
-## Plugins
+For full installation options, see the [official documentation](https://code.claude.com/docs/en/overview).
 
-This repository includes several Claude Code plugins that extend functionality with custom commands and agents. See the [plugins directory](./plugins/README.md) for detailed documentation on available plugins.
+---
 
 ## Reporting Bugs
 
-We welcome your feedback. Use the `/bug` command to report issues directly within Claude Code, or file a [GitHub issue](https://github.com/anthropics/claude-code/issues).
+- **Claude Code bugs** → use `/bug` in Claude Code or file an issue at [anthropics/claude-code](https://github.com/anthropics/claude-code/issues)
+- **Plugin bugs in this fork** → open an issue here
 
 ## Connect on Discord
 
-Join the [Claude Developers Discord](https://anthropic.com/discord) to connect with other developers using Claude Code. Get help, share feedback, and discuss your projects with the community.
-
-## Data collection, usage, and retention
-
-When you use Claude Code, we collect feedback, which includes usage data (such as code acceptance or rejections), associated conversation data, and user feedback submitted via the `/bug` command.
-
-### How we use your data
-
-See our [data usage policies](https://code.claude.com/docs/en/data-usage).
-
-### Privacy safeguards
-
-We have implemented several safeguards to protect your data, including limited retention periods for sensitive information, restricted access to user session data, and clear policies against using feedback for model training.
-
-For full details, please review our [Commercial Terms of Service](https://www.anthropic.com/legal/commercial-terms) and [Privacy Policy](https://www.anthropic.com/legal/privacy).
+Join the [Claude Developers Discord](https://anthropic.com/discord) to connect with other Claude Code users.
